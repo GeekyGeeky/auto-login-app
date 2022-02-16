@@ -87,14 +87,13 @@ class UserProvider extends ChangeNotifier {
       );
       var parsedResponse = jsonDecode(response.body) as Map<String, dynamic>?;
       if (parsedResponse != null) {
-        // var pref = await _preference;
+        final SharedPreferences pref = await SharedPreferences.getInstance();
         _user = User.fromMap(parsedResponse);
-        // pref.setString("user_data", jsonEncode(_user?.toMap()));
+        pref.setString("user_data", jsonEncode(_user?.toMap()));
         notifyListeners();
       }
       return parsedResponse?.containsKey("id") ?? false;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
