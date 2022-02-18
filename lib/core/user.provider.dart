@@ -109,27 +109,29 @@ class UserProvider extends ChangeNotifier {
           Uri.parse(
             "$_baseUrl/users/$_userId",
           ),
-          body: {
+          body: jsonEncode({
+            'id': _userId,
             'email': email,
             'location': location,
             'name': name,
-          },
+          }),
           headers: {
             "Authorization": "Bearer $_token",
             "Content-Type": "application/json",
           });
       var parsedResponse = jsonDecode(response.body) as Map<String, dynamic>?;
+      print(parsedResponse);
       if (parsedResponse != null && parsedResponse['id'] != null) {
         final SharedPreferences pref = await SharedPreferences.getInstance();
-
         _user = User.fromMap(parsedResponse);
         pref.setString("user_data", jsonEncode(_user?.toMap()));
         notifyListeners();
-        return "success";
+        return "Your profile was updated successfully";
       } else {
         return parsedResponse?['message'] ?? "Unable to update user details";
       }
     } catch (e) {
+      print(e);
       rethrow;
     }
   }
