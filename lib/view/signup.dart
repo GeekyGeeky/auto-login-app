@@ -132,6 +132,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           builder: (_) => const LoginScreen(),
                         ),
                       );
+                    _showSnackbar(
+                        "Your account has been created, please login");
                   } else {
                     setState(() => _isLoading = false);
                     _showSnackbar(result ?? "An error occurred, try again");

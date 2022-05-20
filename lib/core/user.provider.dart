@@ -61,11 +61,11 @@ class UserProvider extends ChangeNotifier {
         headers: {
           "Content-Type": "application/json",
         },
-        body: {
+        body: jsonEncode({
           'email': email,
           'password': password,
           'name': name,
-        },
+        }),
       );
       var parsedResponse = jsonDecode(response.body) as Map<String, dynamic>?;
       return parsedResponse?['message'];
